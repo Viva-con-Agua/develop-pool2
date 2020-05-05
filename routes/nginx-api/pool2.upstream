@@ -1,0 +1,20 @@
+
+###
+# Auth
+##
+#
+upstream assets-backend {
+    server 172.3.220.4:1323;
+}
+upstream auth-frontend {
+    server 192.168.2.120:8080;
+}
+ 
+upstream auth-backend {
+  server 192.168.2.120:1323;
+}
+
+upstream dispenser-backend {
+    server 192.168.2.120:1323;
+    #server 172.3.100.2:1323;
+}

@@ -1,0 +1,48 @@
+#!/bin/bash
+
+
+# install widget
+install_widget() {
+    cd widget && 
+    git clone https://github.com/Viva-con-Agua/${1}.git &&
+    cd ${1} &&
+    npm install &&
+    npm run build &&
+    cp -r ./dist/* ../../volumes/assets/js/
+}
+
+# update_widget
+#update_widget() {
+#    
+#}
+
+# pull repo update docker and publis as develop
+update_docker(){
+	cd repos/${1} && git pull && cd ../../ && docker-compose up -d --build $1;
+}
+
+print_help() {
+    echo "Usage:          version 0.0.1"
+    echo " "
+    echo " update <service>          #pull service from git and build docker"
+}
+
+print_help_install() {
+    echo "Usage:        "
+    echo " "
+    echo " widget <name>            #install widget from github"
+    echo " "
+}
+
+install_base() {
+    case $1 in 
+        widget) install_widget $2;;
+        *) print_help_install
+    esac
+}
+
+case $1 in 
+    install) install_base $2 $3;; 
+    update) update_docker $2;;
+    *) print_help
+esac
